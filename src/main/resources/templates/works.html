@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Список творів</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            padding: 8px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        .search-button {
+            padding: 8px 16px;
+            background-color: #f1a7b8;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #d45d9b;
+        }
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .work-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        .work-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #d45d9b;
+        }
+        .work-description {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .work-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .action-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .edit-button {
+            background-color: #f1a7b8;
+            color: white;
+        }
+        .delete-button {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        #addWorkButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #d45d9b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Список творів</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Пошук творів...">
+        <button onclick="searchWorks()" class="search-button">Пошук</button>
+    </div>
+
+    <div id="works-container" class="works-grid">
+        <!-- Тут будуть картки з творами -->
+    </div>
+
+    <button id="addWorkButton" onclick="showAddWorkModal()">+</button>
+</div>
+
+<script>
+    // Завантаження творів при запуску сторінки
+    document.addEventListener('DOMContentLoaded', loadWorks);
+
+    function loadWorks() {
+        fetch('/api/works')
+            .then(response => response.json())
+            .then(works => {
+                displayWorks(works);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function displayWorks(works) {
+        const container = document.getElementById('works-container');
+        container.innerHTML = '';
+
+        works.forEach(work => {
+            const workCard = document.createElement('div');
+            workCard.className = 'work-card';
+            workCard.innerHTML = `
+                    <h3 class="work-title">${work.title}</h3>
+                    <p class="work-description">${work.description}</p>
+                    <div class="work-actions">
+                        <button class="action-button edit-button" onclick="editWork(${work.id})">
+                            Редагувати
+                        </button>
+                        <button class="action-button delete-button" onclick="deleteWork(${work.id})">
+                            Видалити
+                        </button>
+                    </div>
+                `;
+            container.appendChild(workCard);
+        });
+    }
+
+    function searchWorks() {
+        const searchTerm = document.getElementById('searchInput').value;
+        fetch(`/api/works?search=${searchTerm}`)
+            .then(response => response.json())
+            .then(works => {
+                displayWorks(works);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function deleteWork(id) {
+        if (confirm('Ви впевнені, що хочете видалити цей твір?')) {
+            fetch(`/api/works/${id}`, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    loadWorks(); // Перезавантажуємо список
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function editWork(id) {
+        fetch(`/api/works/${id}`)
+            .then(response => response.json())
+            .then(work => {
+                // Тут можна додати логіку відкриття модального вікна для редагування
+                console.log('Edit work:', work);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function addWork(workData) {
+        fetch('/api/works', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(workData)
+        })
+            .then(response => response.json())
+            .then(() => {
+                loadWorks(); // Перезавантажуємо список
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Обробник події для поля пошуку (пошук при натисканні Enter)
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchWorks();
+        }
+    });
+</script>
+</body>
+</html>

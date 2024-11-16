@@ -1,0 +1,134 @@
+:root {
+    --primary-pink: #FFC0CB;
+    --secondary-pink: #FFE4E1;
+    --accent-pink: #FF69B4;
+    --background-white: #FFFFFF;
+    --text-color: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: var(--background-white);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.navbar {
+    background-color: var(--primary-pink);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-transform: uppercase;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-pink);
+}
+
+.search-section {
+    background-color: var(--secondary-pink);
+    padding: 2rem;
+    text-align: center;
+}
+
+.search-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.search-container input[type="text"] {
+    width: 50%;
+    padding: 0.8rem;
+    border: 2px solid var(--primary-pink);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.search-container button {
+    padding: 0.8rem 1.5rem;
+    margin-left: 1rem;
+    background-color: var(--accent-pink);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: var(--primary-pink);
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.work-card {
+    background-color: var(--background-white);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.work-card:hover {
+    transform: translateY(-10px);
+}
+
+.card-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.like-btn, .save-btn {
+    background-color: var(--accent-pink);
+    border: none;
+    padding: 0.5rem 1rem;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.like-btn:hover, .save-btn:hover {
+    background-color: var(--primary-pink);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--secondary-pink);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}

@@ -1,0 +1,6 @@
+### Реєстрація нового користувача
+POST http://localhost:8081/auth/register
+Content-Type: application/x-www-form-urlencoded
+
+
+email=viktoriia@example.com&password=viktoriia
