@@ -1,0 +1,59 @@
+### Register User
+POST http://localhost:8081/auth/register
+Content-Type: application/x-www-form-urlencoded
+email=test11@example.com&password=123456
+
+
+### Login User - Успішний вхід
+POST http://localhost:8081/auth/login
+Content-Type: application/x-www-form-urlencoded
+email=test11@example.com&password=123456
+
+
+### Login User - Невдалий вхід
+POST http://localhost:8081/auth/login
+Content-Type: application/x-www-form-urlencoded
+email=test11@example.com&password=123456
+
+
+### Logout User
+POST http://localhost:8081/auth/logout
+
+
+### Save Work for User
+POST http://localhost:8081/api/saved-works
+Content-Type: application/json
+{
+  "userId": 1,
+  "workId": 101,
+  "description": "My favorite work"
+}
+
+
+### Get Saved Works for User
+GET http://localhost:8081/api/saved-works/1
+
+
+### Add New Work
+POST http://localhost:8081/api/works
+Content-Type: application/json
+{
+  "title": "New Story",
+  "content": "This is a new story content.",
+  "genre": "Fiction",
+  "authorId": 1
+}
+
+
+### Get All Works
+GET http://localhost:8081/api/works
+
+
+### Get Work by ID
+GET http://localhost:8081/api/works/1
+
+
+### Delete Work
+DELETE http://localhost:8081/api/works/1
+
+
